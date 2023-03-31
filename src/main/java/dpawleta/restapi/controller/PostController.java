@@ -17,11 +17,18 @@ public class PostController {
 
     @GetMapping("/posts")
     public List<Post> getPosts(){
-        throw new IllegalArgumentException("Not implemented yet");
+        return postService.getPosts();
     }
 
     @GetMapping("/posts/{id}")
     public Post getSinglePost(@PathVariable long id){
-        throw new IllegalArgumentException("Not implemented yet");
+        return postService.getSinglePost(id);
     }
+
+    @GetMapping("/postsAll")
+    public List<Post> getAllPosts(){
+        return postService.getAllPosts();
+    }
+
+
 }

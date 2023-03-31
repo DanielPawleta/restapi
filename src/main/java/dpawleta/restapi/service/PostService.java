@@ -11,11 +11,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostService {
 
-
     private final PostRepository postRepository;
 
     public List<Post> getPosts(){
         return postRepository.findAll();
     }
 
+    public Post getSinglePost(long id) {
+        return postRepository.findById(id)
+                .orElseThrow();
+    }
+
+    public List<Post> getAllPosts(){
+        return postRepository.findAllPosts();
+    }
 }
