@@ -68,7 +68,14 @@ public class PostService {
         return postEdited;
     }
 
+    @Transactional
     public void deletePost(long id) {
+        List<Comment> comments = commentRepository.findAllByPostId(id);
+
+        List<Long> ids = comments.stream()
+                .map(Comment::getId)
+                .collect(Collectors.toList());
+        commentRepository.deleteCommentsWithIds(ids);
         postRepository.deleteById(id);
     }
 }
