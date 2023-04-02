@@ -1,0 +1,25 @@
+version: "3.1"
+services:
+  restapi-postgresql-container:
+    image: postgres:latest
+    env_file: ./.env
+    ports:
+      - $POSTGRESQL_LOCAL_PORT:$POSTGRESQL_DOCKER_PORT
+    hostname: restapi-postgresql-container
+    networks:
+      - restapi-postgresql-net
+
+  restapi-spring-app-container:
+    depends_on:
+      - restapi-postgresql-container
+    image: restapi-spring-app:latest
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - restapi-postgresql-net
+
+networks:
+  restapi-postgresql-net:
