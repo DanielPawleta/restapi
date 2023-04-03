@@ -1,5 +1,6 @@
 package dpawleta.restapi.service;
 
+import dpawleta.restapi.exceptions.IllegalJsonBodyException;
 import dpawleta.restapi.model.Comment;
 import dpawleta.restapi.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,11 @@ public class CommentService {
     }
 
     public Comment addComment(Comment comment) {
-        return commentRepository.save(comment);
+        if (comment.getId() == 0L)  {
+            return commentRepository.save(comment);
+        } else {
+            throw new IllegalJsonBodyException("Id specified in Json body");
+        }
     }
 
     @Transactional
